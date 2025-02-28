@@ -17,26 +17,23 @@
 * along with obindex2. If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <opencv2/xfeatures2d.hpp>
+#include <opencv2/features2d.hpp>
 
 #include "obindex2/binary_index.h"
 
 int main() {
   // Creating feature detector and descriptor
-  cv::Ptr<cv::FastFeatureDetector> det =
-          cv::FastFeatureDetector::create();
-  cv::Ptr<cv::xfeatures2d::BriefDescriptorExtractor> des =
-          cv::xfeatures2d::BriefDescriptorExtractor::create();
+  cv::Ptr<cv::Feature2D> detector = cv::ORB::create(1500);
 
   // Loading the test image
   cv::Mat img = cv::imread("image00.jpg");
 
   // Computing keypoints and descriptors
   std::vector<cv::KeyPoint> kps;
-  det->detect(img, kps);
+  detector->detect(img, kps);
 
   cv::Mat descs;
-  des->compute(img, kps, descs);
+  detector->compute(img, kps, descs);
 
   // Creating a new index of images
   obindex2::ImageIndex index(16, 150, 4);

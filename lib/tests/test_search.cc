@@ -22,7 +22,7 @@
 #include <iostream>
 
 #include <boost/filesystem.hpp>
-#include <opencv2/xfeatures2d.hpp>
+#include <opencv2/features2d.hpp>
 
 #include "obindex2/binary_index.h"
 
@@ -50,10 +50,7 @@ void getFilenames(const std::string& directory,
 
 int main(int argc, char** argv) {
   // Creating feature detector and descriptor
-  cv::Ptr<cv::FastFeatureDetector> det =
-          cv::FastFeatureDetector::create();
-  cv::Ptr<cv::xfeatures2d::BriefDescriptorExtractor> des =
-          cv::xfeatures2d::BriefDescriptorExtractor::create();
+  cv::Ptr<cv::Feature2D> detector = cv::ORB::create(1500);
 
   // Loading image filenames
   std::vector<std::string> filenames;
@@ -68,9 +65,9 @@ int main(int argc, char** argv) {
   std::vector<cv::KeyPoint> kps0;
   cv::Mat dscs0;
   cv::Mat image0 = cv::imread(filenames[0]);
-  det->detect(image0, kps0);
+  detector->detect(image0, kps0);
   cv::KeyPointsFilter::retainBest(kps0, 1000);
-  des->compute(image0, kps0, dscs0);
+  detector->compute(image0, kps0, dscs0);
 
   // Adding the image to the index.
   index.addImage(0, kps0, dscs0);
@@ -85,9 +82,9 @@ int main(int argc, char** argv) {
     cv::Mat img = cv::imread(filenames[i]);
     std::vector<cv::KeyPoint> kps;
     cv::Mat dscs;
-    det->detect(img, kps);
+    detector->detect(img, kps);
     cv::KeyPointsFilter::retainBest(kps, 1000);
-    des->compute(img, kps, dscs);
+    detector->compute(img, kps, dscs);
 
     // Matching the descriptors
     std::vector<std::vector<cv::DMatch> > matches_feats;
