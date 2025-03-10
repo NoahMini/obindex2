@@ -43,7 +43,7 @@ ImageIndex::ImageIndex(const unsigned k,
 }
 
 void ImageIndex::addImage(const unsigned image_id,
-                          const std::vector<cv::KeyPoint>& kps,
+                          const std::vector<cv::Point3f>& kps,
                           const cv::Mat& descs) {
   // Creating the set of BinaryDescriptors
   for (int i = 0; i < descs.rows; i++) {
@@ -55,7 +55,7 @@ void ImageIndex::addImage(const unsigned image_id,
     // Creating the inverted index item
     InvIndexItem item;
     item.image_id = image_id;
-    item.pt = kps[i].pt;
+    item.pt = kps[i];
     item.dist = 0.0;
     item.kp_ind = i;
     inv_index_[d].push_back(item);
@@ -77,7 +77,7 @@ void ImageIndex::addImage(const unsigned image_id,
 }
 
 void ImageIndex::addImage(const unsigned image_id,
-                const std::vector<cv::KeyPoint>& kps,
+                const std::vector<cv::Point3f>& kps,
                 const cv::Mat& descs,
                 const std::vector<cv::DMatch>& matches) {
   // --- Adding new features
@@ -109,7 +109,7 @@ void ImageIndex::addImage(const unsigned image_id,
     // Creating the inverted index item
     InvIndexItem item;
     item.image_id = image_id;
-    item.pt = kps[index].pt;
+    item.pt = kps[index];
     item.dist = 0.0;
     item.kp_ind = index;
     inv_index_[d].push_back(item);
@@ -134,7 +134,7 @@ void ImageIndex::addImage(const unsigned image_id,
     // Creating the inverted index item
     InvIndexItem item;
     item.image_id = image_id;
-    item.pt = kps[qindex].pt;
+    item.pt = kps[qindex];
     item.dist = matches[match_ind].distance;
     item.kp_ind = qindex;
     inv_index_[t_d].push_back(item);
@@ -375,14 +375,14 @@ void ImageIndex::deleteDescriptor(BinaryDescriptorPtr q) {
   inv_index_.erase(q);
 }
 
-void ImageIndex::getMatchings(
-      const std::vector<cv::KeyPoint>& query_kps,
+void ImageIndex::getMatchings(                          // Not used its fine
+      const std::vector<cv::Point3f>& query_kps,
       const std::vector<cv::DMatch>& matches,
       std::unordered_map<unsigned, PointMatches>* point_matches) {
   for (unsigned i = 0; i < matches.size(); i++) {
     // Getting the query point
     int qid = matches[i].queryIdx;
-    cv::Point2f qpoint = query_kps[qid].pt;
+    cv::Point3f qpoint = query_kps[qid];
 
     // Processing the train points
     int tid = matches[i].trainIdx;

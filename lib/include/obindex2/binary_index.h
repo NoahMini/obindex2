@@ -38,12 +38,12 @@ enum MergePolicy {
 struct InvIndexItem {
   InvIndexItem() :
       image_id(0),
-      pt(0.0f, 0.0f),
+      pt(0.0f, 0.0f, 0.0f),
       dist(DBL_MAX),
       kp_ind(-1) {}
 
   InvIndexItem(const int id,
-               const cv::Point2f kp,
+               const cv::Point3f kp,
                const double d,
                const int kp_i = -1) :
   image_id(id),
@@ -53,7 +53,7 @@ struct InvIndexItem {
   {}
 
   unsigned image_id;
-  cv::Point2f pt;
+  cv::Point3f pt;
   double dist;
   int kp_ind;
 };
@@ -73,7 +73,7 @@ struct ImageMatch {
   bool operator<(const ImageMatch &lcr) const { return score > lcr.score; }
 };
 
-struct PointMatches {
+struct PointMatches {                               // Not used its fine
   std::vector<cv::Point2f> query;
   std::vector<cv::Point2f> train;
 };
