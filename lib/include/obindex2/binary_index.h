@@ -90,10 +90,10 @@ class ImageIndex {
 
   // Methods
   void addImage(const unsigned image_id,
-                const std::vector<cv::KeyPoint>& kps,
+                const std::vector<cv::Point3f>& kps,
                 const cv::Mat& descs);
   void addImage(const unsigned image_id,
-                const std::vector<cv::KeyPoint>& kps,
+                const std::vector<cv::Point3f>& kps,
                 const cv::Mat& descs,
                 const std::vector<cv::DMatch>& matches);
   void searchImages(const cv::Mat& descs,
@@ -105,7 +105,7 @@ class ImageIndex {
                          const unsigned knn = 2,
                          const unsigned checks = 32);
   void deleteDescriptor(const unsigned desc_id);
-  void getMatchings(const std::vector<cv::KeyPoint>& query_kps,
+  void getMatchings(const std::vector<cv::Point3f>& query_kps,
                     const std::vector<cv::DMatch>& matches,
                     std::unordered_map<unsigned, PointMatches>* point_matches);
   inline unsigned numImages() {

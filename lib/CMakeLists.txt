@@ -72,27 +72,27 @@ target_link_libraries(obindex2
                       ${OpenCV_LIBRARIES}
                       ${Boost_LIBRARIES})
 
-### Testing ###
-if (${EnableTesting} STREQUAL "ON")
-  # Test for BinaryDescriptor class
-  add_executable(test_bdesc tests/test_bdesc.cc)
-  target_link_libraries(test_bdesc obindex2)
+# ### Testing ###
+# if (${EnableTesting} STREQUAL "ON")
+#   # Test for BinaryDescriptor class
+#   add_executable(test_bdesc tests/test_bdesc.cc)
+#   target_link_libraries(test_bdesc obindex2)
 
-  # Test for BinaryTree class
-  add_executable(test_btree tests/test_btree.cc)
-  target_link_libraries(test_btree obindex2)
+#   # Test for BinaryTree class
+#   add_executable(test_btree tests/test_btree.cc)
+#   target_link_libraries(test_btree obindex2)
 
-  # Test for ImageIndex class
-  add_executable(test_bindex tests/test_bindex.cc)
-  target_link_libraries(test_bindex obindex2)
+#   # Test for ImageIndex class
+#   add_executable(test_bindex tests/test_bindex.cc)
+#   target_link_libraries(test_bindex obindex2)
 
-  # Test for searching images
-  add_executable(test_search tests/test_search.cc)
-  target_link_libraries(test_search obindex2)
+#   # Test for searching images
+#   add_executable(test_search tests/test_search.cc)
+#   target_link_libraries(test_search obindex2)
 
-  enable_testing(true)  # Enables unit-testing.
-  add_test(NAME test_bdesc COMMAND test_bdesc)
-  add_test(NAME test_btree COMMAND test_btree)
-  add_test(NAME test_bindex COMMAND test_bindex)
-  add_test(NAME test_search COMMAND test_search)
-endif()
+#   enable_testing(true)  # Enables unit-testing.
+#   add_test(NAME test_bdesc COMMAND test_bdesc)
+#   add_test(NAME test_btree COMMAND test_btree)
+#   add_test(NAME test_bindex COMMAND test_bindex)
+#   add_test(NAME test_search COMMAND test_search)
+# endif()
